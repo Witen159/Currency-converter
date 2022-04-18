@@ -15,9 +15,24 @@ namespace CurrencyConverter.Web.Controllers
         }
 
         [HttpGet]
-        public int Get(string currencyCode, int amount)
+        [Route("/convertToRubles")]
+        public double ConvertCurrencyToRubles(string currencyCode, double amount)
         {
             return _currencyConverter.ConvertToRubles(currencyCode, amount);
+        }
+        
+        [HttpGet]
+        [Route("/convertFromRubles")]
+        public double ConvertRublesToCurrency(string convertingCurrencyCode, double amount)
+        {
+            return _currencyConverter.ConvertFromRubles(convertingCurrencyCode, amount);
+        }
+        
+        [HttpGet]
+        [Route("/convertCurrency")]
+        public double ConvertCurrency(string currencyCode, string convertingCurrencyCode, double amount)
+        {
+            return _currencyConverter.ConvertCurrency(currencyCode, convertingCurrencyCode, amount);
         }
     }
 }

@@ -14,12 +14,13 @@ namespace CurrencyConverter.Data.HttpClients
             _client = client;
         }
         
-        public int GetCourse(string currencyCode)
+        public double GetCourse(string currencyCode)
         {
             var response = _client.GetFromJsonAsync<CourseResponse>("daily_json.js")
                 .GetAwaiter().GetResult();
+            var valute = response.Valute[currencyCode];
             
-            return (int) response.Valute[currencyCode].Value;
+            return valute.Value / valute.Nominal ;
         }
     }
 }

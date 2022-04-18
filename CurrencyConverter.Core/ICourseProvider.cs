@@ -2,6 +2,6 @@
 {
     public interface ICourseProvider
     {
-        int GetCourse(string currencyCode);
+        double GetCourse(string currencyCode);
     }
 }

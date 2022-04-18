@@ -15,6 +15,7 @@ namespace CurrencyConverter.Data.HttpClients.Models
         [JsonPropertyName("ID")]
         public string Id { get; set; }
         public string NumCode { get; set; }
+        public int Nominal { get; set; }
         public double Value { get; set; }
     }
 }

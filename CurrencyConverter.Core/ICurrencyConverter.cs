@@ -2,6 +2,9 @@
 {
     public interface ICurrencyConverter
     {
-        int ConvertToRubles(string currencyCode, int amount);
+        double ConvertToRubles(string currencyCode, double amount);
+        double ConvertFromRubles(string convertingCurrencyCode, double amount);
+
+        double ConvertCurrency(string currencyCode, string convertingCurrencyCode, double amount);
     }
 }
