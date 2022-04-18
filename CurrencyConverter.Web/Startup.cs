@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CurrencyConverter.Core;
+using CurrencyConverter.Data.HttpClients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +32,17 @@ namespace CurrencyConverter.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "CurrencyConverter.Web", Version = "v1"});
+            });
+            
+            // services.AddSingleton<ILogger>(_ => new Logger("Logs.txt"));
+
+            services.AddScoped<ICourseProvider, CourseProvider>();
+            services.AddScoped<ICurrencyConverter, Core.CurrencyConverter>();
+
+
+            services.AddHttpClient<ICourseProvider, CourseProvider>((provider, options) =>
+            {
+                options.BaseAddress = new Uri(Configuration["CurrencyUri"]);
             });
         }
 
