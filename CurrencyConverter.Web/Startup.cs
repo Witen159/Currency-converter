@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CurrencyConverter.Core;
+using CurrencyConverter.Data;
 using CurrencyConverter.Data.HttpClients;
 using CurrencyConverter.Web.Logging;
 using CurrencyConverter.Web.Middlewares;
@@ -37,14 +38,8 @@ namespace CurrencyConverter.Web
             
             services.AddSingleton<ILogger>(_ => new Logger("Logs.txt"));
 
-            services.AddScoped<ICourseProvider, CourseProvider>();
-            services.AddScoped<ICurrencyConverter, Core.CurrencyConverter>();
-
-
-            services.AddHttpClient<ICourseProvider, CourseProvider>((provider, options) =>
-            {
-                options.BaseAddress = new Uri(Configuration["CurrencyUri"]);
-            });
+            services.AddData(Configuration);
+            services.AddCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
