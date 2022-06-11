@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CurrencyConverter.Core.Domains.Users.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CurrencyConverter.Core
 {
@@ -7,6 +8,7 @@ namespace CurrencyConverter.Core
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
             services.AddScoped<ICurrencyConverter, Core.CurrencyConverter>();
+            services.AddScoped<IUserService, UserService>();
             
             return services;
         }
