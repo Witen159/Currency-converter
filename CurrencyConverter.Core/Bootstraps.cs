@@ -7,7 +7,7 @@ namespace CurrencyConverter.Core
     {
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
-            services.AddScoped<ICurrencyConverter, Core.CurrencyConverter>();
+            services.AddScoped<ICurrencyConverter, Core.CurrencyConverter>(); 
             services.AddScoped<IUserService, UserService>();
             
             return services;

@@ -1,7 +1,9 @@
-﻿namespace CurrencyConverter.Core.Domains.Users
+﻿namespace CurrencyConverter.Data.Users
 {
-    public class User
+    public class UserEntity
     {
+        // only in db model
+        public int UserId { get; set; }
         public string Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

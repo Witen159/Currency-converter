@@ -6,8 +6,9 @@ namespace CurrencyConverter.Core.Domains.Users.Services
     {
         User Get(string id);
         IEnumerable<User> GetAll();
-        void Creat(User user);
+        void Create(User user);
         void Update(User user);
         void Delete(string id);
+        void SerActive(string id);
     }
 }
