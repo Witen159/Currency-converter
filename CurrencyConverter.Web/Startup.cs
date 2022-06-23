@@ -54,7 +54,7 @@ namespace CurrencyConverter.Web
 
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseMiddleware<TimeExecuteMiddleware>();
-            app.UseCustomAuthentication();
+            // app.UseCustomAuthentication();
             
             app.UseHttpsRedirection();
 

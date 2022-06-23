@@ -8,10 +8,16 @@ namespace CurrencyConverter.Data.Users.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private static List<UserEntity> _userEntities = new List<UserEntity>();
+        private readonly ConverterContext _context;
+
+        public UserRepository(ConverterContext context)
+        {
+            _context = context;
+        }
+
         public User Get(string id)
         {
-            var entity = _userEntities.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Users.FirstOrDefault(x => x.Id == id);
 
             if (entity == null)
             {
@@ -27,7 +33,7 @@ namespace CurrencyConverter.Data.Users.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            return _userEntities.Select(x => new User()
+            return _context.Users.Select(x => new User()
             {
                 Id = x.Id,
                 Login = x.Login
@@ -44,27 +50,31 @@ namespace CurrencyConverter.Data.Users.Repositories
                 IsActive = false
             };
             
-            _userEntities.Add(entity);
+            _context.Users.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Update(User user)
         {
-            var entity = _userEntities.FirstOrDefault(x => x.Id == user.Id);
+            var entity = _context.Users.FirstOrDefault(x => x.Id == user.Id);
 
             if (entity != null)
             {
                 entity.Login = user.Login;
                 entity.IsActive = user.IsActive;
             }
+
+            _context.SaveChanges();
         }
 
         public void Delete(string id)
         {
-            var entity = _userEntities.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Users.FirstOrDefault(x => x.Id == id);
 
             if (entity != null)
             {
-                _userEntities.Remove(entity);
+                _context.Users.Remove(entity);
+                _context.SaveChanges();
             }
         }
     }

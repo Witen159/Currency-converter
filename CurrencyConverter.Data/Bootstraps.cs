@@ -3,6 +3,7 @@ using CurrencyConverter.Core;
 using CurrencyConverter.Core.Domains.Users.Repositories;
 using CurrencyConverter.Data.HttpClients;
 using CurrencyConverter.Data.Users.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,8 @@ namespace CurrencyConverter.Data
             {
                 options.BaseAddress = new Uri(configuration["CurrencyUri"]);
             });
+            services.AddDbContext<ConverterContext>(options => options.UseNpgsql(
+                "Host=localhost;Port=5432;Database=converter-test;Username=postgres;Password=Madmanp159"));
             return services;
         }
     }

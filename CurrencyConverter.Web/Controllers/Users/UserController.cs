@@ -32,7 +32,7 @@ namespace CurrencyConverter.Web.Controllers.Users
         }
         
         [HttpGet]
-        public IEnumerable<UserDto> GetAll(string id)
+        public IEnumerable<UserDto> GetAll()
         {
             return _userService.GetAll().Select(x => new UserDto
             {
