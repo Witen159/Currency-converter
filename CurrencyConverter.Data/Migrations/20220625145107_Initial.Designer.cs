@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CurrencyConverter.Data.Migrations
 {
     [DbContext(typeof(ConverterContext))]
-    [Migration("20220623195025_Initial")]
+    [Migration("20220625145107_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,6 +19,29 @@ namespace CurrencyConverter.Data.Migrations
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.15");
+
+            modelBuilder.Entity("CurrencyConverter.Data.UserMessages.UserMessageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_message");
+                });
 
             modelBuilder.Entity("CurrencyConverter.Data.Users.UserEntity", b =>
                 {
@@ -41,6 +64,20 @@ namespace CurrencyConverter.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("CurrencyConverter.Data.UserMessages.UserMessageEntity", b =>
+                {
+                    b.HasOne("CurrencyConverter.Data.Users.UserEntity", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CurrencyConverter.Data.Users.UserEntity", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

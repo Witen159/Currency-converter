@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CurrencyConverter.Core.Domains.Users;
 using CurrencyConverter.Core.Domains.Users.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyConverter.Data.Users.Repositories
 {
@@ -17,7 +18,7 @@ namespace CurrencyConverter.Data.Users.Repositories
 
         public User Get(string id)
         {
-            var entity = _context.Users.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Users.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if (entity == null)
             {
@@ -33,7 +34,9 @@ namespace CurrencyConverter.Data.Users.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.Select(x => new User()
+            var users = _context.Users.AsNoTracking().ToList();
+            
+            return users.Select(x => new User()
             {
                 Id = x.Id,
                 Login = x.Login
@@ -51,7 +54,6 @@ namespace CurrencyConverter.Data.Users.Repositories
             };
             
             _context.Users.Add(entity);
-            _context.SaveChanges();
         }
 
         public void Update(User user)
@@ -63,8 +65,6 @@ namespace CurrencyConverter.Data.Users.Repositories
                 entity.Login = user.Login;
                 entity.IsActive = user.IsActive;
             }
-
-            _context.SaveChanges();
         }
 
         public void Delete(string id)
@@ -74,7 +74,6 @@ namespace CurrencyConverter.Data.Users.Repositories
             if (entity != null)
             {
                 _context.Users.Remove(entity);
-                _context.SaveChanges();
             }
         }
     }

@@ -7,10 +7,12 @@ namespace CurrencyConverter.Core.Domains.Users.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public User Get(string id)
@@ -30,16 +32,19 @@ namespace CurrencyConverter.Core.Domains.Users.Services
                 throw new Exception("Incorrect login");
             }
             _userRepository.Creat(user);
+            _unitOfWork.SaveChanges();
         }
 
         public void Update(User user)
         {
             _userRepository.Update(user);
+            _unitOfWork.SaveChanges();
         }
 
         public void Delete(string id)
         {
             _userRepository.Delete(id);
+            _unitOfWork.SaveChanges();
         }
 
         public void SerActive(string id)
@@ -62,6 +67,7 @@ namespace CurrencyConverter.Core.Domains.Users.Services
             }
             
             _userRepository.Update(user);
+            _unitOfWork.SaveChanges();
         }
     }
 }

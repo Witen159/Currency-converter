@@ -15,12 +15,15 @@ namespace CurrencyConverter.Data
         {
             services.AddScoped<ICourseProvider, CourseProvider>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddHttpClient<ICourseProvider, CourseProvider>((options) =>
             {
                 options.BaseAddress = new Uri(configuration["CurrencyUri"]);
             });
-            services.AddDbContext<ConverterContext>(options => options.UseNpgsql(
+            services.AddDbContext<ConverterContext>(options => options
+                .UseLazyLoadingProxies()
+                .UseNpgsql(
                 "Host=localhost;Port=5432;Database=converter-test;Username=postgres;Password=Madmanp159"));
             return services;
         }

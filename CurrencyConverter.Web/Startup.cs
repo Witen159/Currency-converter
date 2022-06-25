@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CurrencyConverter.Core;
 using CurrencyConverter.Data;
 using CurrencyConverter.Data.HttpClients;
+using CurrencyConverter.Web.HostedServices;
 using CurrencyConverter.Web.Logging;
 using CurrencyConverter.Web.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,8 @@ namespace CurrencyConverter.Web
             
             services.AddSingleton<ILogger>(_ => new Logger("Logs.txt"));
 
+            services.AddHostedService<MigrationHostedService>();
+            
             services.AddData(Configuration);
             services.AddCore();
         }
